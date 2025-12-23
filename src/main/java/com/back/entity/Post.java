@@ -18,13 +18,13 @@ import static jakarta.persistence.FetchType.LAZY;
 @NoArgsConstructor
 public class Post extends BaseIdAndTime {
 
-    @ManyToOne(fetch = LAZY) //지연로딩
+    @ManyToOne(fetch = LAZY) //지연 로딩
     private Member author;
     private String title;
     @Column(columnDefinition = "LONGTEXT")
     private String content;
 
-    @OneToMany(mappedBy = "post",cascade = {PERSIST, REMOVE}, orphanRemoval = true)
+    @OneToMany(mappedBy = "post",cascade = {PERSIST, REMOVE}, orphanRemoval = true) // 영속성 전이 및 고아 객체 제거
     private List<PostComment> comments = new ArrayList<>();
 
     public Post(Member author, String title, String content) {
@@ -37,6 +37,7 @@ public class Post extends BaseIdAndTime {
         PostComment postComment = new PostComment(this, author, content);
 
         comments.add(postComment);
+        author.increaseActivityScore(1);
 
         return postComment;
     }

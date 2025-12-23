@@ -29,7 +29,7 @@ public class DataInit {  // 실행될 때 만들어지는 데이터. 테스트�
     }
 
     @Bean
-    public ApplicationRunner baseInitDataRunner() {
+    public ApplicationRunner baseInitDataRunner() { //ApplicationRunner Bean을 등록하면 스프링부트가 시작할 때 한 번 실행됨
         return args -> {
             self.makeBaseMembers();
             self.makeBasePosts();
